@@ -630,7 +630,9 @@ define(function (require, exports, module) {
         
         if (_$currentCustomViewer) {
             _$currentCustomViewer.remove();
-            _currentViewProvider.onRemove();
+            if (_currentViewProvider.onRemove) {
+                _currentViewProvider.onRemove();
+            }
         }
         _$currentCustomViewer = null;
         _currentViewProvider = null;
