@@ -283,7 +283,7 @@ define(function (require, exports, module) {
      * sign off listeners when editor manager closes
      * the image viewer
      */
-    function _removeListeners() {
+    function onRemove() {
         $(PanelManager).off("editorAreaResize", _onEditorAreaResize);
         $(DocumentManager).off("fileNameChange", _onFileNameChange);
         $("#img").off("mousemove", "#img-preview, #img-scale, #img-tip, .img-guide", _showImageTip)
@@ -326,10 +326,11 @@ define(function (require, exports, module) {
                 }
             });
             $("#image-holder").show();
+            
             // listen to resize to  update the scale sticker
             $(PanelManager).on("editorAreaResize", _onEditorAreaResize);
-            // listen to removal to stop listening to resize events
-            $(EditorManager).on("removeCustomViewer", _removeListeners);
+            
+            // make sure we always show the right file name
             $(DocumentManager).on("fileNameChange", _onFileNameChange);
 
             $("#img-tip").hide();
@@ -353,4 +354,5 @@ define(function (require, exports, module) {
     
     exports.getCustomViewHolder = getCustomViewHolder;
     exports.render              = render;
+    exports.onRemove            = onRemove;
 });

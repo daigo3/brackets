@@ -627,9 +627,10 @@ define(function (require, exports, module) {
     
     /** Remove existing custom view if present */
     function _removeCustomViewer() {
-        $(exports).triggerHandler("removeCustomViewer");
+        
         if (_$currentCustomViewer) {
             _$currentCustomViewer.remove();
+            _currentViewProvider.onRemove();
         }
         _$currentCustomViewer = null;
         _currentViewProvider = null;
@@ -690,7 +691,7 @@ define(function (require, exports, module) {
     }
     
     function registerCustomViewerProvider(langId, provider) {
-        if ( !_customViewerRegistry[langId]) {
+        if (!_customViewerRegistry[langId]) {
             _customViewerRegistry[langId] = provider;
         } else {
             console.error("There already is a custom viewer registered for language id  \"" + langId + "\"");
