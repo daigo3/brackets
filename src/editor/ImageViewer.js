@@ -268,16 +268,6 @@ define(function (require, exports, module) {
         }
     }
 
-    /**
-     * creates a DOM node to place in the editor-holder
-     * in order to display an image.
-     * @param {!string} fullPath  path to image file
-     * @return {JQuery}
-     *
-     */
-    function getCustomViewHolder(fullPath) {
-        return $(Mustache.render(ImageHolderTemplate, {fullPath: fullPath}));
-    }
     
     /** 
      * sign off listeners when editor manager closes
@@ -295,8 +285,12 @@ define(function (require, exports, module) {
      * i.e. getting actual and natural width and height andplacing the scale sticker
      * @param {!string} fullPath path to the image file
      */
-    function render(fullPath) {
-        var relPath = ProjectManager.makeProjectRelativeIfPossible(fullPath);
+    function render(fullPath, $editorHolder) {
+        var relPath = ProjectManager.makeProjectRelativeIfPossible(fullPath),
+            $customViewer = $(Mustache.render(ImageHolderTemplate, {fullPath: fullPath}));
+
+        // place DOM node to hold image
+        $editorHolder.append($customViewer);
 
         _scale = 100;   // initialize to 100
         _scaleDivInfo = null;
@@ -350,9 +344,9 @@ define(function (require, exports, module) {
                 $(".img-guide").css("cursor", "crosshair");
             }
         });
+        return $customViewer;
     }
     
-    exports.getCustomViewHolder = getCustomViewHolder;
     exports.render              = render;
     exports.onRemove            = onRemove;
 });

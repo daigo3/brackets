@@ -666,15 +666,11 @@ define(function (require, exports, module) {
         // Hide the not-editor or reset current editor
         $("#not-editor").css("display", "none");
         _nullifyEditor();
-
+        
         _currentViewProvider = provider;
-        _$currentCustomViewer = provider.getCustomViewHolder(fullPath);
-
-        // place in window
-        $("#editor-holder").append(_$currentCustomViewer);
         
         // add path, dimensions and file size to the view after loading image
-        provider.render(fullPath);
+        _$currentCustomViewer = provider.render(fullPath, $("#editor-holder"));
         
         _setCurrentlyViewedPath(fullPath);
     }
